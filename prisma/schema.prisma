@@ -59,7 +59,7 @@ model columns {
 model tasks {
   id          Int          @id @default(autoincrement())
   title       String
-  description String?
+  desc        String?
   position    Int
   column_id   Int
   column      columns      @relation("ColumnTasks", fields: [column_id], references: [id])
@@ -79,10 +79,26 @@ model user_tasks {
   @@id([user_id, task_id])
 }
 
-// model leads {
-//   id         Int       @id @default(autoincrement())
-//   name String
-//   contact_number String
-//   email String
-//   status String
-// } 
+model customers {
+  id             Int    @id @default(autoincrement())
+  name           String
+  contact_number String
+  email          String
+  desc           String
+  status         stages
+}
+
+enum stages {
+  lead
+  prospect
+  opportunity
+  customer
+}
+
+model audit_logs {
+  id        Int      @id @default(autoincrement())
+  model     String
+  action    String
+  timestamp DateTime @default(now())
+  changes   Json
+}
