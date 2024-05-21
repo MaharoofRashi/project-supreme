@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model agency {
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  name      String
+  password  String
+  employees users[]
+}
+
+model users {
+  id         Int          @id @default(autoincrement())
+  email      String
+  password   String
+  name       String
+  role       roles
+  agency     agency       @relation(fields: [agency_id], references: [id])
+  agency_id  Int
+  boards     boards[]     @relation("UserBoards")
+  tasks      tasks[]      @relation("UserTasks")
+  user_tasks user_tasks[]
+}
+
+enum roles {
+  employee
+  manager
+  rep
+  admin
+}
+
+model boards {
+  id         Int       @id @default(autoincrement())
+  name       String
+  owner_id   Int
+  owner      users     @relation("UserBoards", fields: [owner_id], references: [id])
+  columns    columns[] @relation("BoardColumns")
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model columns {
+  id         Int      @id @default(autoincrement())
+  name       String
+  position   Int
+  board_id   Int
+  board      boards   @relation("BoardColumns", fields: [board_id], references: [id])
+  tasks      tasks[]  @relation("ColumnTasks")
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model tasks {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String?
+  position    Int
+  column_id   Int
+  column      columns      @relation("ColumnTasks", fields: [column_id], references: [id])
+  assignee_id Int?
+  assignee    users?       @relation("UserTasks", fields: [assignee_id], references: [id])
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  user_tasks  user_tasks[]
+}
+
+model user_tasks {
+  user_id Int
+  task_id Int
+  user    users @relation(fields: [user_id], references: [id])
+  task    tasks @relation(fields: [task_id], references: [id])
+
+  @@id([user_id, task_id])
+}
+
+// model leads {
+//   id         Int       @id @default(autoincrement())
+//   name String
+//   contact_number String
+//   email String
+//   status String
+// } 
