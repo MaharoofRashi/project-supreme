@@ -5,9 +5,10 @@ import {
     UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
-import { AgencyInterface } from './agency.model';
+import { AgencyInterface, UserInterface } from './agency.model';
 import { AuthService } from '../auth/auth.service';
 import { ConfigService } from '@nestjs/config';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AgencyService {
@@ -112,5 +113,40 @@ export class AgencyService {
         });
         if (!agency) throw new NotFoundException('no agency found');
         return agency;
+    }
+
+    async create_user(id: number, data: UserInterface) {
+        const agency = await this.find_agency_by_id(id);
+        const user = await this.prismaService.users.create({
+            data: {
+                email: data.email,
+                name: data.name,
+                role: data.role,
+                password: data.password,
+                agency: {
+                    connect: {
+                        id: agency.id,
+                    },
+                },
+            },
+        });
+        return user;
+    }
+
+    async get_all_users(id: number, role: Pick<UserInterface, 'role' & 'all'>) {
+        const agency = await this.find_agency_by_id(id);
+        let whereClause = {
+            agency: {
+                id: agency.id,
+            },
+        };
+
+        if (role !== 'all') {
+            whereClause['role'] = role;
+        }
+        const users = await this.prismaService.users.findMany({
+            where:whereClause
+        });
+        return users;
     }
 }

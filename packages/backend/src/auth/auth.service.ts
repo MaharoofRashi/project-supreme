@@ -11,10 +11,6 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) {}
 
-    async signup(email: string) {
-        let user = await this.userService.find_user_by_email(email);
-    }
-
     async generate_token(payload: object, secret: string, expiresIn: string) {
         return await this.jwtService.signAsync(payload, {
             expiresIn,

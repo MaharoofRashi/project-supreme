@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
 import { UserModule } from 'src/user/user.module';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { AgencyAccessStrategy } from './strategies/access.agency.strategies';
@@ -14,7 +13,7 @@ import { AgencyRefresStrategy } from './strategies/refresh.agency.strategies';
         AgencyAccessStrategy,
         AgencyRefresStrategy,
     ],
-    controllers: [AuthController],
+    controllers: [],
     exports: [AuthService],
 })
 export class AuthModule {}
