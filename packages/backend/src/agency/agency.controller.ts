@@ -6,22 +6,17 @@ import {
     HttpCode,
     HttpStatus,
     Post,
+    Query,
     UseGuards,
 } from '@nestjs/common';
 import { AgencyService } from './agency.service';
-import { AgencyInterface } from './agency.model';
+import { AgencyInterface, UserInterface } from './agency.model';
 import { User } from 'src/core/decorators/user.decorator';
 import { AuthGuard } from '@nestjs/passport';
 
 export type AgencyPaylod = {
     agency_id: number;
     role: string;
-};
-
-export type RefreshAgencyPaylod = {
-    agency_id: number;
-    role: string;
-    refresh_token: string;
 };
 
 @Controller('agency')
@@ -48,7 +43,7 @@ export class AgencyController {
     @UseGuards(AuthGuard('jwt-refresh'))
     async refresh(
         @Headers('authorization') refresh_token: string,
-        @User() user: RefreshAgencyPaylod,
+        @User() user: AgencyPaylod,
     ) {
         const token = refresh_token.replace('Bearer ', '').trim();
         return {
@@ -61,6 +56,27 @@ export class AgencyController {
     async profile(@User() user: AgencyPaylod) {
         return {
             data: await this.agencyService.find_agency_by_id(user.agency_id),
+        };
+    }
+
+    @Post('/create-user')
+    @UseGuards(AuthGuard('jwt'))
+    @HttpCode(HttpStatus.CREATED)
+    async create_user(@User() user: AgencyPaylod, @Body() dto: UserInterface) {
+        return {
+            data: await this.agencyService.create_user(user.agency_id,dto),
+        };
+    }
+
+    @Get('/get-all-users')
+    @UseGuards(AuthGuard('jwt'))
+    @HttpCode(HttpStatus.OK)
+    async get_all_users(
+        @User() user: AgencyPaylod,
+        @Query('type') role: Pick<UserInterface, 'role' & 'all'>,
+    ) {
+        return {
+            data: await this.agencyService.get_all_users(user.agency_id, role),
         };
     }
 }
