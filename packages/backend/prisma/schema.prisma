@@ -13,14 +13,14 @@ model agency {
   name          String
   password      String
   address       String
-  phone         String @unique
+  phone         String  @unique
   refresh_token String?
   employees     users[]
 }
 
 model users {
   id         Int          @id @default(autoincrement())
-  email      String
+  email      String       @unique
   password   String
   name       String
   role       roles
