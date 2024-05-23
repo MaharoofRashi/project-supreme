@@ -8,11 +8,14 @@ datasource db {
 }
 
 model agency {
-  id        Int     @id @default(autoincrement())
-  email     String  @unique
-  name      String
-  password  String
-  employees users[]
+  id            Int     @id @default(autoincrement())
+  email         String  @unique
+  name          String
+  password      String
+  address       String
+  phone         String @unique
+  refresh_token String?
+  employees     users[]
 }
 
 model users {
@@ -75,11 +78,12 @@ model user_tasks {
   task_id Int
   user    users @relation(fields: [user_id], references: [id])
   task    tasks @relation(fields: [task_id], references: [id])
+
   @@id([user_id, task_id])
 }
 
 model customers {
-  id             Int    @id @default(autoincrement())
+  id             Int     @id @default(autoincrement())
   name           String
   contact_number String
   email          String?
