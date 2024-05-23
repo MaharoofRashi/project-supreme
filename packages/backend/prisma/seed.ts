@@ -6,9 +6,45 @@ async function run_seed() {
     await prisma.$connect();
 
     const seed = {
-        agency: [],
+        agency: [
+            {
+                id: 1,
+                email: 'pranavofficial404@gmail.com',
+                name: 'dbx visa consultancy',
+                password: 'password',
+                address: 'dubai',
+                phone: '9567296056',
+                refresh_token: null,
+            },
+            {
+                id: 2,
+                email: 'connectmaharoof@gmail.com',
+                name: 'supreme visa consultancy',
+                password: 'password',
+                address: 'dubai',
+                phone: '9567296056',
+                refresh_token: null,
+            },
+        ],
 
-        users: [],
+        users: [
+            {
+                id: 1,
+                email: 'pranavofficial404@gmail.com',
+                password: 'PranavaPassword',
+                name: 'pranav',
+                role: 'employee',
+                agency_id: 1,
+            },
+            {
+                id: 2,
+                email: 'connectmaharoof@gmail.com',
+                password: 'PranavaPassword',
+                name: 'mahroof',
+                role: 'employee',
+                agency_id: 2,
+            },
+        ],
 
         boards: [],
 
