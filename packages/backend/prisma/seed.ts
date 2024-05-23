@@ -22,7 +22,7 @@ async function run_seed() {
                 name: 'supreme visa consultancy',
                 password: 'password',
                 address: 'dubai',
-                phone: '9567296056',
+                phone: '9567296057',
                 refresh_token: null,
             },
         ],
