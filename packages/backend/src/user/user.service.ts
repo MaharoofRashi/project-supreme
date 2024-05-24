@@ -36,22 +36,34 @@ export class UserService {
             throw new ForbiddenException('password was incorrects');
 
         const access_token = await this.authService.generate_token(
-            { user_id: user.id, role: user.role, email: user.email },
+            {
+                user_id: user.id,
+                role: user.role,
+                email: user.email,
+                agency_id: user.agency_id,
+            },
             process.env.ACCESS_JWT_SECRET_USERS,
             process.env.ACCESS_JWT_EXPIRATION_USERS,
         );
 
         const refresh_token = await this.authService.generate_token(
-            { user_id: user.id, role: user.role, email: user.email },
+            {
+                user_id: user.id,
+                role: user.role,
+                email: user.email,
+                agency_id: user.agency_id,
+            },
             process.env.ACCESS_JWT_SECRET_USERS,
             process.env.ACCESS_JWT_EXPIRATION_USERS,
         );
+
         await this.prismaService.users.update({
             where: { id: user.id },
             data: {
                 refresh_token,
             },
         });
+
         return {
             access_token,
             refresh_token,
@@ -67,6 +79,7 @@ export class UserService {
                 user_id: user.id,
                 role: user.role,
                 email: user.email,
+                agency_id: user.agency_id,
             },
             process.env.ACCESS_JWT_SECRET_USERS,
             process.env.ACCESS_JWT_EXPIRATION_USERS,
@@ -82,6 +95,7 @@ export class UserService {
         if (!user) throw new NotFoundException('no user found');
         return user;
     }
+
     async logout(id: number) {
         const user = await this.find_user_by_id(id);
         await this.prismaService.users.update({

@@ -19,6 +19,7 @@ export type UserPayload = {
     user_id: number;
     email: number;
     role: string;
+    agency_id: number;
 };
 
 @Controller('users')

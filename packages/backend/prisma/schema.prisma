@@ -16,6 +16,7 @@ model agency {
   phone         String  @unique
   refresh_token String?
   employees     users[]
+  boards        boards[] @relation("UserBoards")
 }
 
 model users {
@@ -27,7 +28,6 @@ model users {
   role          roles
   agency        agency       @relation(fields: [agency_id], references: [id])
   agency_id     Int
-  boards        boards[]     @relation("UserBoards")
   tasks         tasks[]      @relation("UserTasks")
   user_tasks    user_tasks[]
 }
@@ -43,7 +43,7 @@ model boards {
   id         Int       @id @default(autoincrement())
   name       String
   owner_id   Int
-  owner      users     @relation("UserBoards", fields: [owner_id], references: [id])
+  owner      agency     @relation("UserBoards", fields: [owner_id], references: [id])
   columns    columns[] @relation("BoardColumns")
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt

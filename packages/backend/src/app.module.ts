@@ -7,6 +7,7 @@ import { AgencyModule } from './agency/agency.module';
 import { ConfigModule } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformationInterceptor } from './core/intreceptor/response.interceptor';
+import { KanabanModule } from './kanaban/kanaban.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { TransformationInterceptor } from './core/intreceptor/response.intercept
         AuthModule,
         AgencyModule,
         UserModule,
+        KanabanModule
     ],
     controllers: [AppController],
     providers: [
