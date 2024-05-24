@@ -5,10 +5,11 @@ import {
     UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
-import { AgencyInterface, UserInterface } from './agency.model';
+import { AgencyInterface } from './agency.model';
 import { AuthService } from '../auth/auth.service';
 import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
+import { UserInterface } from 'src/user/users.model';
 
 @Injectable()
 export class AgencyService {

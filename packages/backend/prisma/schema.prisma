@@ -19,16 +19,17 @@ model agency {
 }
 
 model users {
-  id         Int          @id @default(autoincrement())
-  email      String       @unique
-  password   String
-  name       String
-  role       roles
-  agency     agency       @relation(fields: [agency_id], references: [id])
-  agency_id  Int
-  boards     boards[]     @relation("UserBoards")
-  tasks      tasks[]      @relation("UserTasks")
-  user_tasks user_tasks[]
+  id            Int          @id @default(autoincrement())
+  email         String       @unique
+  password      String
+  name          String
+  refresh_token String?
+  role          roles
+  agency        agency       @relation(fields: [agency_id], references: [id])
+  agency_id     Int
+  boards        boards[]     @relation("UserBoards")
+  tasks         tasks[]      @relation("UserTasks")
+  user_tasks    user_tasks[]
 }
 
 enum roles {

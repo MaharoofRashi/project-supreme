@@ -6,8 +6,6 @@ import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthService {
     constructor(
-        private readonly prismaService: PrismaService,
-        private readonly userService: UserService,
         private readonly jwtService: JwtService,
     ) {}
 
