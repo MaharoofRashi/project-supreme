@@ -105,5 +105,6 @@ model audit_logs {
   model     String
   action    String
   timestamp DateTime @default(now())
-  changes   Json
+  old   Json
+  new Json
 }
