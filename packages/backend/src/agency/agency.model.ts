@@ -8,13 +8,10 @@ const agency_schema = z.object({
     password: z.string().min(8).max(16),
 });
 
-export interface AgencyInterface extends z.infer<typeof agency_schema> {}
-
-const user_schema = z.object({
-    name: z.string().min(3).max(50),
-    password: z.string().max(8).max(16),
-    email: z.string().email(),
-    role: z.enum(['admin', 'employee', 'rep', 'manager']),
+export const login_schema = agency_schema.pick({
+    phone: true,
+    password: true,
 });
 
-export interface UserInterface extends z.infer<typeof user_schema> {}
+export interface AgencyInterface extends z.infer<typeof agency_schema> {}
+

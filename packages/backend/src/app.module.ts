@@ -16,8 +16,8 @@ import { TransformationInterceptor } from './core/intreceptor/response.intercept
         }),
         DatabaseModule,
         AuthModule,
-        UserModule,
         AgencyModule,
+        UserModule,
     ],
     controllers: [AppController],
     providers: [

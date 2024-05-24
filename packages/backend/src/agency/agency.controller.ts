@@ -10,9 +10,15 @@ import {
     UseGuards,
 } from '@nestjs/common';
 import { AgencyService } from './agency.service';
-import { AgencyInterface, UserInterface } from './agency.model';
+import {
+    AgencyInterface,
+    login_schema,
+} from './agency.model';
 import { User } from 'src/core/decorators/user.decorator';
 import { AuthGuard } from '@nestjs/passport';
+import { ZodPipe } from 'src/core/pipes/zod.pipe';
+import { UserInterface, user_schema } from 'src/user/users.model';
+import { GUARDS } from 'src/auth/constants';
 
 export type AgencyPaylod = {
     agency_id: number;
@@ -24,14 +30,17 @@ export class AgencyController {
     constructor(private readonly agencyService: AgencyService) {}
 
     @Post('/login')
-    async login(@Body() body: Pick<AgencyInterface, 'email' | 'password'>) {
+    async login(
+        @Body(new ZodPipe(login_schema))
+        body: Pick<AgencyInterface, 'email' | 'password'>,
+    ) {
         return {
             data: await this.agencyService.login(body),
         };
     }
 
     @Post('/logout')
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard(GUARDS.AGENCY_ACCESS_GUARD))
     @HttpCode(HttpStatus.NO_CONTENT)
     async logout(@User() user: AgencyPaylod) {
         return {
@@ -40,8 +49,8 @@ export class AgencyController {
     }
 
     @Post('/refresh')
-    @UseGuards(AuthGuard('jwt-refresh'))
-    async refresh(
+    @UseGuards(AuthGuard(GUARDS.AGENCY_REFRESH_GUARD))
+    async refresh_token(
         @Headers('authorization') refresh_token: string,
         @User() user: AgencyPaylod,
     ) {
@@ -51,7 +60,7 @@ export class AgencyController {
         };
     }
 
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard(GUARDS.AGENCY_ACCESS_GUARD))
     @Get('/profile')
     async profile(@User() user: AgencyPaylod) {
         return {
@@ -60,16 +69,19 @@ export class AgencyController {
     }
 
     @Post('/create-user')
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard(GUARDS.AGENCY_ACCESS_GUARD))
     @HttpCode(HttpStatus.CREATED)
-    async create_user(@User() user: AgencyPaylod, @Body() dto: UserInterface) {
+    async create_user(
+        @User(new ZodPipe(user_schema)) user: AgencyPaylod,
+        @Body() dto: UserInterface,
+    ) {
         return {
-            data: await this.agencyService.create_user(user.agency_id,dto),
+            data: await this.agencyService.create_user(user.agency_id, dto),
         };
     }
 
     @Get('/get-all-users')
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard(GUARDS.AGENCY_ACCESS_GUARD))
     @HttpCode(HttpStatus.OK)
     async get_all_users(
         @User() user: AgencyPaylod,
