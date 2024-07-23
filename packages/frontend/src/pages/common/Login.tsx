@@ -3,6 +3,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { z, ZodError } from 'zod';
 import { login } from '../../service/AdminService';
+import useAuthStore from "../../store/authState"
 
 const loginSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }),
@@ -60,9 +61,11 @@ const loginSchema = z.object({
         login(formData)
           .then((response) => {
             setLoading(false);
-            if (response.status === 200) {
-              const { accessToken, refreshToken, user } = response.data;
-              useAuthStore.getState().login(accessToken, user, refreshToken);
+            if (response.status === 201) {
+              console.log(response);
+              
+              const { access_token, refresh_token, user } = response.data.data;
+              useAuthStore.getState().login(access_token, user, refresh_token);
               if (user.role === "admin") {
               navigate("/admin/dashboard");
               } else if (user.role === "organization") {
@@ -99,11 +102,11 @@ const loginSchema = z.object({
     return (
         <main className="w-full h-auto flex flex-col lg:flex-row">
             <div className="w-full lg:w-1/2 flex justify-center">
-                <img
+                {/* <img
                     src={logo}
                     className="h-[90px] w-[90px] lg:absolute lg:top-0 lg:left-64 lg:h-[150px] lg:w-[150px]"
                     alt=""
-                />
+                /> */}
                 <div className="w-full lg:w-8/12 h-[300px] border flex items-center flex-col mt-2 rounded-2xl border-gray-200 lg:mt-24">
                     <div className="w-9/12 lg:mt-6">
                         <label
@@ -151,7 +154,7 @@ const loginSchema = z.object({
 
                     <div className="w-9/12 lg:mt-4 flex justify-center items-center flex-col">
                         <button
-                            className="bg-customOrange w-full p-2 rounded-md text-white font-semibold transition duration-300 ease-in-out hover:bg-customOrangeLite"
+                            className="bg-orange-200 w-full p-2 rounded-md text-white font-semibold transition duration-300 ease-in-out hover:bg-orange-50"
                             onClick={handleSubmit}
                             disabled={loading}
                         >

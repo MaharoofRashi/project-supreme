@@ -3,7 +3,7 @@ import ModalTitle from './ModalComponents/ModalTitle';
 import Modalnput from './ModalComponents/Modalnput';
 import ModalList from './ModalComponents/ModalList';
 import ModalButton from '../Shared/Button';
-import useStore from '../../../../store/kanbanState';
+import useStore from '../../../store/kanbanState';
 import { v4 as uuid } from 'uuid';
 import { IColumn } from '../../../Utils/Types';
 interface NewBoardModalProps extends ComponentPropsWithoutRef<'dialog'> {

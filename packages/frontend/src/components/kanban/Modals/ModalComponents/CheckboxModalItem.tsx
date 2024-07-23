@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '../../../../Utils/func';
-import useStore from '../../../../../store/kanbanState';
+import useStore from '../../../../store/kanbanState';
 import { ISubTasks } from '../../../../Utils/Types';
 
 type CheckboxModalItemProps = {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BASE_URL } from "../constants/base-url";
 import { getRefreshToken } from "../service/AdminService";
-import useAuthStore from "../store/authStore";
+import useAuthStore from "../store/authState";
 import axios, { AxiosError } from "axios";
 
 const instance = axios.create({

@@ -3,7 +3,7 @@ import ModalTitle from './ModalComponents/ModalTitle';
 import Modalnput from './ModalComponents/Modalnput';
 import { ModalListTask } from './ModalComponents/ModalList';
 import ModalButton from '../Shared/Button';
-import useStore from '../../../../store/kanbanState';
+import useStore from '../../../store/kanbanState';
 import Dropdown from './ModalComponents/Dropdown';
 import { ISubTasks } from '../../../Utils/Types';
 import { v4 as uuid } from 'uuid';

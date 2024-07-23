@@ -2,7 +2,7 @@ import React, { ComponentPropsWithoutRef, forwardRef, useState } from 'react';
 import ModalTitle from './ModalComponents/ModalTitle';
 import MenuIcon from '../Icons/MenuIcon';
 import ModalDescription from './ModalComponents/ModalDescription';
-import useStore from '../../../../store/kanbanState';
+import useStore from '../../../store/kanbanState';
 import CheckboxModalItem from './ModalComponents/CheckboxModalItem';
 import Dropdown from './ModalComponents/Dropdown';
 import MenuModalTask from './ModalComponents/MenuModalTask';

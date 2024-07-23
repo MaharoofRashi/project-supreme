@@ -1,5 +1,5 @@
 import React from 'react';
-import useStore from '../../../../../store/kanbanState';
+import useStore from '../../../../store/kanbanState';
 import { cn } from '../../../../Utils/func';
 import ChevronIcon from '../../Icons/ChevronIcon';
 

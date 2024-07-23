@@ -1,6 +1,6 @@
 import React from 'react';
 import Task from './Task';
-import useStore from '../../../../store/kanbanState';
+import useStore from '../../../store/kanbanState';
 import { Droppable } from 'react-beautiful-dnd';
 import { IColumn, ITasks } from '../../../Utils/Types';
 type IColProps = {

@@ -1,6 +1,6 @@
 import React, { ComponentPropsWithoutRef } from 'react';
 import Button from '../Shared/Button';
-import useStore from '../../../../store/kanbanState';
+import useStore from '../../../store/kanbanState';
 
 interface DeleteBoardModalProps extends ComponentPropsWithoutRef<'div'> {
     onClose: () => void;

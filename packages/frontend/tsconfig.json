@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "store/kanbanState.tsx"],
+  "include": ["src", "src/store/kanbanState.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

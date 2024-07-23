@@ -6,7 +6,7 @@ import EditBoardModal from '../Modals/EditBoardModal';
 import TaskModal from '../Modals/TaskModal';
 import { ITasks } from '../../../Utils/Types';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import useStore from '../../../../store/kanbanState';
+import useStore from '../../../store/kanbanState';
 
 const pelletColor = [
     '#49C4E5',
